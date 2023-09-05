@@ -74,7 +74,6 @@ export class AdminController {
     return this.adminService.refreshToken(+id, refreshToken, res);
   }
 
-  @UseGuards(JwtAuthGuard,AdminGuard)
   @ApiOperation({ summary: 'Activate user' })
   @ApiResponse({ status: 200, type: [Admin] })
   @Get('activate/:link')

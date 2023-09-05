@@ -1,4 +1,16 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Res, HttpCode, HttpStatus } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  Res,
+  HttpCode,
+  HttpStatus,
+  UseGuards,
+} from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -7,6 +19,8 @@ import { User } from './models/user.model';
 import { LoginUserDto } from './dto/login-user.dto';
 import { Response } from 'express';
 import { CookieGetter } from '../decorators/cookieGetter.decorator';
+import { JwtAuthGuard } from '../guards/1jwt-auth.guard';
+import { UserGuard } from '../guards/user.guard';
 
 @ApiTags('User')
 @Controller('user')
@@ -34,6 +48,7 @@ export class UserController {
     return this.userService.login(loginUserDto, res);
   }
 
+  @UseGuards(JwtAuthGuard, UserGuard)
   @ApiOperation({ summary: 'Logout user' })
   @ApiResponse({ status: 200, type: User })
   @HttpCode(HttpStatus.OK)
@@ -46,6 +61,7 @@ export class UserController {
   }
 
   // @UseGuards(UserGuard)
+  @UseGuards(JwtAuthGuard, UserGuard)
   @ApiOperation({ summary: 'Refresh user' })
   @ApiResponse({ status: 200, type: User })
   @Post(':id/refresh')
@@ -64,6 +80,7 @@ export class UserController {
     return this.userService.activate(link);
   }
 
+  @UseGuards(JwtAuthGuard, UserGuard)
   @ApiOperation({ summary: 'Update user' })
   @ApiResponse({ status: 200, type: [User] })
   @Patch(':id')
@@ -71,6 +88,7 @@ export class UserController {
     return this.userService.update(+id, updateUserDto);
   }
 
+  @UseGuards(JwtAuthGuard, UserGuard)
   @ApiOperation({ summary: 'Delete user' })
   @ApiResponse({ status: 200, type: [User] })
   @Delete(':id')
