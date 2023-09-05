@@ -1,0 +1,8 @@
+node_modules
+Dockerfile
+pgdata
+.env
+.env1
+Makefile
+docker-compose.yml
+docker-compose1.yml
