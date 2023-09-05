@@ -27,7 +27,7 @@ import { UserGuard } from '../guards/user.guard';
 export class BookingController {
   constructor(private readonly bookingService: BookingService) {}
 
-  @UseGuards(JwtAuthGuard,AdminGuard,UserGuard)
+  @UseGuards(JwtAuthGuard, AdminGuard, UserGuard)
   @Post()
   @ApiOperation({ summary: 'Create a new booking' })
   @ApiBody({ type: CreateBookingDto }) // Specify the request body DTO
@@ -39,7 +39,7 @@ export class BookingController {
     return this.bookingService.create(createBookingDto);
   }
 
-  @UseGuards(JwtAuthGuard,AdminGuard,UserGuard)
+  @UseGuards(JwtAuthGuard, AdminGuard)
   @Get()
   @ApiOperation({ summary: 'Get all bookings' })
   @ApiResponse({
@@ -50,7 +50,7 @@ export class BookingController {
     return this.bookingService.findAll();
   }
 
-  @UseGuards(JwtAuthGuard,AdminGuard,UserGuard)
+  @UseGuards(JwtAuthGuard, AdminGuard, UserGuard)
   @Get(':id')
   @ApiOperation({ summary: 'Get a booking by ID' })
   @ApiParam({ name: 'id', type: 'number' }) // Specify the parameter
@@ -62,7 +62,7 @@ export class BookingController {
     return this.bookingService.findOne(+id);
   }
 
-  @UseGuards(JwtAuthGuard,AdminGuard,UserGuard)
+  @UseGuards(JwtAuthGuard, AdminGuard, UserGuard)
   @Patch(':id')
   @ApiOperation({ summary: 'Update a booking by ID' })
   @ApiParam({ name: 'id', type: 'number' }) // Specify the parameter
@@ -75,7 +75,7 @@ export class BookingController {
     return this.bookingService.update(+id, updateBookingDto);
   }
 
-  @UseGuards(JwtAuthGuard,AdminGuard,UserGuard)
+  @UseGuards(JwtAuthGuard, AdminGuard, UserGuard)
   @Delete(':id')
   @ApiOperation({ summary: 'Delete a booking by ID' })
   @ApiParam({ name: 'id', type: 'number' }) // Specify the parameter
