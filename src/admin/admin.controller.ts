@@ -27,7 +27,7 @@ import { AdminGuard } from '../guards/Admin.guard';
 export class AdminController {
   constructor(private readonly adminService: AdminService) {}
 
-  @UseGuards(JwtAuthGuard,AdminGuard)
+  
   @ApiOperation({ summary: 'Signup user' })
   @ApiResponse({ status: 201, type: Admin })
   @Post('signup')
@@ -38,7 +38,6 @@ export class AdminController {
     return this.adminService.registration(createAdminDto, res);
   }
 
-  @UseGuards(JwtAuthGuard,AdminGuard)
   @ApiOperation({ summary: 'Login user' })
   @ApiResponse({ status: 200, type: Admin })
   @HttpCode(HttpStatus.OK)

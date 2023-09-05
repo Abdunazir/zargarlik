@@ -12,9 +12,7 @@ import { Observable } from 'rxjs';
 @Injectable()
 export class JwtAuthGuard implements CanActivate {
   constructor(private readonly jwtService: JwtService) {}
-  canActivate(
-    context: ExecutionContext,
-  ): boolean | Promise<any> | Observable<boolean> {
+  async canActivate(context: ExecutionContext): Promise<any> {
     const req = context.switchToHttp().getRequest();
 
     const authHeader = req.headers.authorization;
@@ -34,9 +32,12 @@ export class JwtAuthGuard implements CanActivate {
 
     let user: any;
     try {
-      user = this.jwtService.verify(token);
+      user = await this.jwtService.verify(token, {
+        secret: process.env.ACCESS_TOKEN_KEY,
+      });
       console.log(user);
     } catch (error) {
+      console.log(error);
       throw new UnauthorizedException({
         message: "Foydalanuvchi autorizatsiyadan o'tmagan!3",
       });
